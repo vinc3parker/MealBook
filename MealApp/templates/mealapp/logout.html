@@ -1,0 +1,15 @@
+<!-- mealapp/templates/mealapp/logout.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logout</title>
+</head>
+<body>
+<h2>Logout</h2>
+<p>Are you sure you want to log out?</p>
+<form method="post" action="{% url 'profile' %}">
+    {% csrf_token %}
+    <button type="submit">Cancel</button>
+</form>
+</body>
+</html>

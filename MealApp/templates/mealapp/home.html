@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Home | MealBook{% endblock %}
+
+{% block app_includes %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'mealapp/homestyles.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>Welcome to MealBook!</h1>
+<p>Here are some delicious meals:</p>
+
+<table id="meal-table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Ingredients</th>
+        <th>Instructions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for meal in meals %}
+    <tr>
+        <td>{{ meal.name }}</td>
+        <td>{{ meal.description }}</td>
+        <td>{{ meal.ingredients }}</td>
+        <td>{{ meal.instructions }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<script>
+    // Fancy table interactivity using JavaScript
+    // Add some CSS classes or JavaScript effects to style the table
+
+    // Example: Alternate row background colors
+    const tableRows = document.querySelectorAll('#meal-table tbody tr');
+    tableRows.forEach((row, index) => {
+        if (index % 2 === 0) {
+            row.classList.add('even-row');
+        } else {
+            row.classList.add('odd-row');
+        }
+    });
+
+    // Example: Hover effect on table rows
+    tableRows.forEach(row => {
+        row.addEventListener('mouseover', () => {
+            row.classList.add('hovered-row');
+        });
+
+        row.addEventListener('mouseout', () => {
+            row.classList.remove('hovered-row');
+        });
+    });
+</script>
+{% endblock %}

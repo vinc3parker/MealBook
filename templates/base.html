@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}MealBook{% endblock %}</title>
+    <script type="text/javascript" src="{% static 'js/code.jquery.com_jquery-3.7.0.js' %}"></script>
+    {% block app_includes %}
+    {% endblock %}
+    <link rel="stylesheet" href="{% static 'mealapp/basestyle.css' %}">
+    <!-- Other CSS stylesheets and meta tags can be included here -->
+</head>
+<body>
+    <header>
+        <!-- Add header content here -->
+        <div class="navbar">
+            <h1 class="logo">MealBook</h1>
+            <nav>
+                <ul>
+                    <li><a href="/mealbook">Home</a></li>
+                    <li><a href="/mealbook/about">About</a></li>
+                    <li><a href="/mealbook/cookbook">Cookbook</a></li>
+                    <!-- Add more navigation links as needed -->
+                </ul>
+                <ul>
+                    <li>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'profile' %}">Profile</a>
+                        {% else %}
+                            <a href="/mealbook/login">Login / Signup</a>
+                        {% endif %}
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        {% block content %}
+        <!-- Main content for child templates goes here -->
+        {% endblock %}
+    </main>
+    <footer>
+        <!-- Add footer content here -->
+    </footer>
+</body>
+</html>

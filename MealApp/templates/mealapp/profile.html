@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<h2>Welcome, {{ user.username }}!</h2>
+<p>Email: {{ user.email }}</p>
+<!-- Display other user information as needed -->
+
+<!-- Add a form to logout the user -->
+<form method="post" action="/mealbook/logout/">
+    {% csrf_token %}
+    <button type="submit">Logout</button>
+</form>
+{% endblock %}
