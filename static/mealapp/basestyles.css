@@ -1,0 +1,63 @@
+/* basestyles.css */
+
+/* Reset some default browser styles */
+body, h1, h2, h3, p, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+/* Background image */
+body {
+    background-image: url('../images/pexels-omran-jamal-17609.jpg'); /* Adjust the path as needed */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* Navigation Bar */
+.navbar {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 24px;
+    margin: 0;
+    padding-left: 20px;
+    font-weight: bold; /* Set the font weight to bold */
+    font-family: 'Open Sans Extrabold', sans-serif; /* Use the Open Sans font */
+}
+
+.nav-links {
+    list-style: none;
+    margin-right: 20px;
+    text-align: center;
+    font-family: 'Open Sans Light';
+}
+
+.nav-links li {
+    display: inline-block;
+}
+
+.nav-links li:last-child {
+    margin-right: 0;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.nav-links a:hover {
+    background-color: #f00;
+}

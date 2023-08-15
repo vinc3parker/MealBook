@@ -2,59 +2,20 @@
 
 {% block title %}Home | MealBook{% endblock %}
 
-{% block app_includes %}
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'mealapp/homestyles.css' %}">
-{% endblock %}
-
 {% block content %}
-<h1>Welcome to MealBook!</h1>
-<p>Here are some delicious meals:</p>
-
-<table id="meal-table">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Ingredients</th>
-        <th>Instructions</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for meal in meals %}
-    <tr>
-        <td>{{ meal.name }}</td>
-        <td>{{ meal.description }}</td>
-        <td>{{ meal.ingredients }}</td>
-        <td>{{ meal.instructions }}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
-<script>
-    // Fancy table interactivity using JavaScript
-    // Add some CSS classes or JavaScript effects to style the table
-
-    // Example: Alternate row background colors
-    const tableRows = document.querySelectorAll('#meal-table tbody tr');
-    tableRows.forEach((row, index) => {
-        if (index % 2 === 0) {
-            row.classList.add('even-row');
-        } else {
-            row.classList.add('odd-row');
-        }
-    });
-
-    // Example: Hover effect on table rows
-    tableRows.forEach(row => {
-        row.addEventListener('mouseover', () => {
-            row.classList.add('hovered-row');
-        });
-
-        row.addEventListener('mouseout', () => {
-            row.classList.remove('hovered-row');
-        });
-    });
-</script>
+<div class="jumbotron jumbotron-fluid text-center">
+    <div class="container">
+        <h1 class="display-4">Welcome to MealBook</h1>
+        <p class="lead">Explore delicious recipes and cookbooks</p>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <h2>About MealBook</h2>
+            <p>MealBook is a platform dedicated to sharing and discovering a wide variety of delicious recipes and cookbooks. Whether you're a seasoned chef or a cooking enthusiast, MealBook provides a community-driven space to explore new culinary ideas, find inspiration, and connect with fellow food lovers.</p>
+            <!-- You can add more content about the purpose of the website -->
+        </div>
+    </div>
+</div>
 {% endblock %}

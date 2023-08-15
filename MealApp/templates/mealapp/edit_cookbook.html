@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Edit Cookbook</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
+<a href="{% url 'cookbooks' %}" class="btn btn-secondary mt-2">Back to Cookbooks</a>
+{% endblock %}

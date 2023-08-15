@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Ingredients | MealBook{% endblock %}
+
+{% block app_includes %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'mealapp/ingredients.css' %}">
+{% endblock %}
+
+{% block content %}
+<h2>Ingredients</h2>
+<table class="table table-hover table-dark">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Protein per 100g</th>
+        <th>Calories per 100g</th>
+        <th>Carbs per 100g</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for ingredient in ingredients %}
+    <tr>
+        <td>{{ ingredient.name }}</td>
+        <td>{{ ingredient.get_category_display }}</td>
+        <td>{{ ingredient.protein_per_100g }}</td>
+        <td>{{ ingredient.calories_per_100g }}</td>
+        <td>{{ ingredient.carbs_per_100g }}</td>
+        <td>
+            <a class="btn btn-primary btn-sm" href="{% url 'edit_ingredient' ingredient.id %}">Edit</a>
+            <a class="btn btn-danger btn-sm" href="{% url 'delete_ingredient' ingredient.id %}">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<a class="btn btn-success" href="{% url 'addIngredient' %}">Add Ingredient</a>
+<a class="btn btn-primary" href="{% url 'cookbook' %}">Back to Cookbook</a>
+{% endblock %}

@@ -3,6 +3,31 @@
 {% block title %}Cookbook | MealBook{% endblock %}
 
 {% block content %}
-<h1>Cookbook</h1>
-<!-- Add content specific to the Cookbook page here -->
+<div class="jumbotron jumbotron-fluid text-center">
+    <div class="container">
+        <h1 class="display-4">Explore our Cookbooks</h1>
+        <p class="lead">Discover a variety of cookbooks filled with mouthwatering recipes</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <!-- Add your cookbook content here -->
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 text-center">
+            <h3 class="mb-4">Our Database</h3>
+            <div class="btn-group">
+                <a href="{% url 'cookbooks' %}" class="btn btn-danger btn-lg">Cookbooks</a>
+                <a href="{% url 'meals' %}" class="btn btn-danger btn-lg">Meals</a>
+                <a href="{% url 'ingredients' %}" class="btn btn-danger btn-lg">Ingredients</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

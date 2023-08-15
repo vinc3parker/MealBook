@@ -1,19 +1,37 @@
 from django.shortcuts import render, redirect
-from mealapp.models import Meal
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login, authenticate, logout
-from django.contrib import messages
+from .forms import IngredientForm, MealForm, CookbookForm, ContactForm
+from .models import Ingredient, Meal, Cookbook
+from django.views.generic.edit import UpdateView, DeleteView
+
+
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+
+            send_mail(
+                subject,
+                message,
+                email,
+                ['your_site_owner_email@example.com'],  # Replace with actual email
+                fail_silently=False,
+            )
+
+            return HttpResponseRedirect(reverse('contact'))  # Redirect to contact page after submission
+
+    else:
+        form = ContactForm()
+
+    return render(request, 'mealapp/contact.html', {'form': form})
 
 
 def home(request):
-    meals = Meal.objects.all()
-    context = {'meals': meals}
-    return render(request, 'mealapp/home.html', context)
-
-
-def about(request):
     context = {}
-    return render(request, 'mealapp/about.html', context)
+    return render(request, 'mealapp/home.html', context)
 
 
 def cookbook(request):
@@ -21,54 +39,100 @@ def cookbook(request):
     return render(request, 'mealapp/cookbook.html', context)
 
 
-def signup(request):
+def cookbooks(request):
+    cookbooks = Cookbook.objects.all()  # Retrieve all meals from the database
+    context = {'cookbooks': cookbooks}
+    return render(request, 'mealapp/cookbooks.html', context)
+
+
+def add_cookbook(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CookbookForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('mealbook/login')
-        else:
-            print("Form erroros:", form.errors)
+            return redirect('cookbooks')  # Redirect back to the cookbooks page
     else:
-        form = UserCreationForm()
-    return render(request, 'mealapp/signup.html', {'form': form})
+        form = CookbookForm()
+    return render(request, 'mealapp/add_cookbook.html', {'form': form})
 
 
-def login(request):
+class CookbookUpdateView(UpdateView):
+    model = Cookbook
+    form_class = CookbookForm
+    template_name = 'mealapp/edit_cookbook.html'
+
+    def form_valid(self, form):
+        form.save()
+        return redirect('cookbooks')
+
+
+class CookbookDeleteView(DeleteView):
+    model = Cookbook
+    template_name = 'mealapp/cookbook_confirm_delete.html'
+    success_url = '/mealbook/cookbooks'
+
+
+def meals(request):
+    meals = Meal.objects.all()  # Retrieve all meals from the database
+    context = {'meals': meals}  # Pass the meals queryset to the context
+    return render(request, 'mealapp/meals.html', context)
+
+
+def add_meal(request):
     if request.method == 'POST':
-        # Perform login authentication and processing here
-        form = AuthenticationForm(request, data=request.POST)
+        form = MealForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(request, username=username, password=password)
-
-            if user is not None:
-                # If the user is valid, log them in and redirect to a specific page
-                login(request, user)
-                return redirect('home')  # Replace 'home' with the appropriate URL name for the home page
-            else:
-                # If the user is not valid or login fails, handle the error (e.g., show an error message)
-                # For simplicity, we'll just return the login page again in this example
-                return render(request, 'mealapp/login.html', {'form': form})
-
+            form.save()
+            return redirect('meals')  # Redirect back to the meals page
     else:
-        # If the request method is not POST (e.g., GET request), render the login page with an empty form
-        form = AuthenticationForm()
-
-    return render(request, 'mealapp/login.html', {'form': form})
+        form = MealForm()
+    return render(request, 'mealapp/add_meal.html', {'form': form})
 
 
-def profile(request):
-    user = request.user
-    return render(request, 'mealapp/profile.html', {'user': user})
+class MealUpdateView(UpdateView):
+    model = Meal
+    fields = ['name', 'category', 'ingredients']
+    template_name = 'mealapp/meal_form.html'
+
+    def form_valid(self, form):
+        form.save()
+        return redirect('meals')
 
 
-def perform_logout(request):
+class MealDeleteView(DeleteView):
+    model = Meal
+    template_name = 'mealapp/meal_confirm_delete.html'
+    success_url = '/mealbook/meals'
+
+
+def ingredients(request):
+    ingredients = Ingredient.objects.all()  # Retrieve all ingredients from the database
+    context = {'ingredients': ingredients}  # Pass the ingredients queryset to the context
+    return render(request, 'mealapp/ingredients.html', context)
+
+
+def add_ingredient(request):
     if request.method == 'POST':
-        logout(request)  # Logout the user
-        messages.success(request, 'You have been successfully logged out.')
-        return redirect('home')  # Redirect to the home page after logout
+        form = IngredientForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('ingredients')  # Redirect back to the ingredients page
+    else:
+        form = IngredientForm()
+    return render(request, 'mealapp/add_ingredient.html', {'form': form})
 
-    # Render the logout template for GET requests
-    return render(request, 'mealapp/logout.html')
+
+class IngredientUpdateView(UpdateView):
+    model = Ingredient
+    form_class = IngredientForm  # Use the same form for editing
+    template_name = 'mealapp/edit_ingredient.html'  # Create this template
+
+    def form_valid(self, form):
+        form.save()
+        return redirect('ingredients')  # Redirect to ingredients list after edit
+
+
+class IngredientDeleteView(DeleteView):
+    model = Ingredient
+    template_name = 'mealapp/delete_ingredient.html'  # Create this template
+    success_url = '/mealbook/ingredients'  # Redirect to ingredients list after delete

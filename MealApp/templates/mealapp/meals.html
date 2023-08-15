@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Meals | MealBook{% endblock %}
+
+{% block app_includes %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'mealapp/meals.css' %}">
+{% endblock %}
+
+{% block content %}
+<h2>Meals</h2>
+<!-- meals.html -->
+
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Ingredients</th>
+        <th>Actions</th> <!-- Add a new column for actions -->
+    </tr>
+    </thead>
+    <tbody>
+    {% for meal in meals %}
+    <tr>
+        <td>{{ meal.name }}</td>
+        <td>{{ meal.category }}</td>
+        <td>
+            {% for ingredient in meal.ingredients.all %}
+            {{ ingredient.name }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </td>
+        <td>
+            <a href="{% url 'edit_meal' meal.pk %}" class="btn btn-sm btn-primary">Edit</a>
+            <a href="{% url 'delete_meal' meal.pk %}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+<a class="btn btn-danger" href="{% url 'addMeal' %}">Add Meal</a>
+<a class="btn btn-primary" href="{% url 'cookbook' %}">Back to Cookbooks</a>
+{% endblock %}

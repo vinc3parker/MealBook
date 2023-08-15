@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Ingredient | MealBook{% endblock %}
+
+{% block content %}
+<h2>Edit Ingredient</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a class="btn btn-secondary" href="{% url 'ingredients' %}">Cancel</a>
+</form>
+{% endblock %}

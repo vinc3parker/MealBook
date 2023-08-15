@@ -1,0 +1,18 @@
+/* static/mealapp/cookbooks.css */
+.table {
+    background-color: #333; /* Off black background */
+    color: #fff; /* Text color */
+}
+
+.table th,
+.table td {
+    border-color: #444; /* Slightly lighter border color */
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #292929; /* Darker stripe color */
+}
+
+.table-hover tbody tr:hover {
+    background-color: #ff4d4d; /* Red background on hover */
+}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Meal | MealBook{% endblock %}
+
+{% block content %}
+<h2>Add New Meal</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-success" type="submit">Add Meal</button>
+</form>
+<a class="btn btn-primary" href="{% url 'meals' %}">Back to Meals</a>
+{% endblock %}
